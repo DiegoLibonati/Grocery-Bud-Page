@@ -1,61 +1,57 @@
-const inputDataEntry = document.querySelector(".section_container_dataentry input");
-const btnAddData = document.querySelector(".section_container_dataentry button");
+const inputDataEntry = document.querySelector(
+  ".section_container_dataentry input"
+);
+const btnAddData = document.querySelector(
+  ".section_container_dataentry button"
+);
 
-const containerShowItems = document.querySelector(".section_container_items_list");
+const containerShowItems = document.querySelector(
+  ".section_container_items_list"
+);
 
-const btnClearAllItems = document.querySelector(".section_container_clearitems button");
+const btnClearAllItems = document.querySelector(
+  ".section_container_clearitems button"
+);
 
 let dataLocalStorage = [];
 let dataEdit = false;
 
 readLocalStorage();
 
-btnAddData.addEventListener("click", ()=>{
+btnAddData.addEventListener("click", () => {
+  let inputDataEntryValue = inputDataEntry.value;
 
-    let inputDataEntryValue = inputDataEntry.value;
-
-    addToLocalStorage(inputDataEntryValue);
-
+  addToLocalStorage(inputDataEntryValue);
 });
 
-btnClearAllItems.addEventListener("click", ()=>{
+btnClearAllItems.addEventListener("click", () => {
+  containerShowItems.innerHTML = "";
 
-    containerShowItems.innerHTML = "";
-
-    localStorage.clear();
-
+  localStorage.clear();
 });
 
-function addToLocalStorage(value){
+function addToLocalStorage(value) {
+  let itemsLocalStorage = getLocalStorage();
 
-    let itemsLocalStorage = getLocalStorage();
-    
-    if (itemsLocalStorage != null && dataEdit == false){
+  if (itemsLocalStorage != null && dataEdit == false) {
+    itemsLocalStorage.push({ item: value });
 
-        itemsLocalStorage.push({item:value})
+    localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
 
-        localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
+    addItemToContainer(value);
+  }
 
-        addItemToContainer(value);
+  if (itemsLocalStorage == null && dataEdit == false) {
+    dataLocalStorage.push({ item: value });
 
-    }
-    
-    if (itemsLocalStorage == null && dataEdit == false){
+    localStorage.setItem("list", JSON.stringify(dataLocalStorage));
 
-        dataLocalStorage.push({item:value});
-
-        localStorage.setItem("list", JSON.stringify(dataLocalStorage));
-    
-        addItemToContainer(value);
-    }
-
-
-
+    addItemToContainer(value);
+  }
 }
 
-function addItemToContainer(value){
-
-    containerShowItems.innerHTML += `
+function addItemToContainer(value) {
+  containerShowItems.innerHTML += `
     
     <li>
         <div class="section_container_items_list_li_title">
@@ -69,86 +65,74 @@ function addItemToContainer(value){
     </li>
     `;
 
-    itemDelete();
-    itemEdit();
+  itemDelete();
+  itemEdit();
 }
 
-function readLocalStorage(){
-    let itemsLocalStorage = getLocalStorage();
-    
-    if (itemsLocalStorage != null){
-        for (let i = 0; i < itemsLocalStorage.length; i++){
-            addItemToContainer(itemsLocalStorage[i].item);
-        }
+function readLocalStorage() {
+  let itemsLocalStorage = getLocalStorage();
+
+  if (itemsLocalStorage != null) {
+    for (let i = 0; i < itemsLocalStorage.length; i++) {
+      addItemToContainer(itemsLocalStorage[i].item);
     }
-
+  }
 }
 
-function getLocalStorage(){
-   return JSON.parse(localStorage.getItem("list"));
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("list"));
 }
 
-function itemDelete(value){
-    const btnsDelete = document.querySelectorAll(".btnDelete");
+function itemDelete(value) {
+  const btnsDelete = document.querySelectorAll(".btnDelete");
 
-    btnsDelete.forEach(function(btn){
+  btnsDelete.forEach(function (btn) {
+    btn.addEventListener("click", () => {
+      let itemsLocalStorage = getLocalStorage();
 
-        btn.addEventListener("click", ()=>{
+      let liOfBtn = btn.parentElement.parentElement;
+      let liId =
+        btn.parentElement.parentElement.children[0].children[0].outerText;
 
-            let itemsLocalStorage = getLocalStorage();
+      for (let i = 0; i < itemsLocalStorage.length; i++) {
+        if (liId == itemsLocalStorage[i].item) {
+          const index = itemsLocalStorage.indexOf(itemsLocalStorage[i]);
 
-            let liOfBtn = btn.parentElement.parentElement;
-            let liId = btn.parentElement.parentElement.children[0].children[0].outerText;
-            
-            
-            for(let i = 0; i < itemsLocalStorage.length; i++){
-                if (liId == itemsLocalStorage[i].item){
-                    const index = itemsLocalStorage.indexOf(itemsLocalStorage[i]);
+          itemsLocalStorage.splice(index, 1);
+          localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
+        }
+      }
 
-                    itemsLocalStorage.splice(index, 1);
-                    localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
-                }
-            }
-
-            liOfBtn.remove();
-        });
-
+      liOfBtn.remove();
     });
+  });
 }
 
-function itemEdit(){
+function itemEdit() {
+  const btnsEdit = document.querySelectorAll(".btnEdit");
 
-    const btnsEdit = document.querySelectorAll(".btnEdit");
+  btnsEdit.forEach(function (btn) {
+    btn.addEventListener("click", () => {
+      let liH2 = btn.parentElement.parentElement.children[0].children[0];
+      let liId =
+        btn.parentElement.parentElement.children[0].children[0].outerText;
+      let itemsLocalStorage = getLocalStorage();
+      dataEdit = true;
+      btnAddData.textContent = "✓";
+      inputDataEntry.value = liId;
 
-    btnsEdit.forEach(function(btn){
-        btn.addEventListener("click", ()=>{
+      btnAddData.addEventListener("click", () => {
+        for (let i = 0; i < itemsLocalStorage.length; i++) {
+          if (liId == itemsLocalStorage[i].item) {
+            itemsLocalStorage[i].item = inputDataEntry.value;
+            liH2.innerHTML = itemsLocalStorage[i].item;
+            localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
+          }
+        }
 
-            let liH2 = btn.parentElement.parentElement.children[0].children[0];
-            let liId = btn.parentElement.parentElement.children[0].children[0].outerText;
-            let itemsLocalStorage = getLocalStorage();
-            dataEdit = true;
-            btnAddData.textContent = "✓";
-            inputDataEntry.value = liId;
-
-
-            btnAddData.addEventListener("click", ()=>{
-
-                for (let i = 0; i < itemsLocalStorage.length; i++){
-                    if (liId == itemsLocalStorage[i].item){
-                        itemsLocalStorage[i].item = inputDataEntry.value;
-                        liH2.innerHTML = itemsLocalStorage[i].item;
-                        localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
-                    }
-                }
-
-                btnAddData.textContent = "+";
-                dataEdit = false;
-
-            });
-        });
+        btnAddData.textContent = "+";
+        dataEdit = false;
+      });
     });
-
+  });
 }
-
-
-
