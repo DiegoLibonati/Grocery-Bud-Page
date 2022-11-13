@@ -35,7 +35,7 @@ I made a web page that allows you to add items to a list. These items can be edi
 
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Grocery%20page`
+`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Grocery%20Page`
 
 ## Video
 
