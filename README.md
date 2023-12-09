@@ -23,19 +23,9 @@ I made a web page that allows you to add items to a list. These items can be edi
 2. CSS3
 3. HTML5
 
-## Galery
-
-![grocery-page](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/grocery-0.jpg)
-
-![grocery-page](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/grocery-1.jpg)
-
-![grocery-page](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/grocery-2.jpg)
-
-![grocery-page](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/grocery-3.jpg)
-
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Grocery%20Page`
+[`https://www.diegolibonati.com.ar/#/project/38`](https://www.diegolibonati.com.ar/#/project/38)
 
 ## Video
 
