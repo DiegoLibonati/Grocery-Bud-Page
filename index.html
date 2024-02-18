@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grocery</title>
 
-    <link rel="stylesheet" type="text/css" href="estilos.css" />
+    <link rel="stylesheet" type="text/css" href="./src/styles.css" />
 
     <script
       src="https://kit.fontawesome.com/41faca984e.js"
@@ -14,27 +14,27 @@
     ></script>
   </head>
   <body>
-    <main class="main_container">
-      <section class="section_container">
+    <main class="main_container flex items-center justify-center w-full h-screen bg-[#8E7AB5]">
+      <section class="section_container h-auto w-[80%] bg-[#B784B7] p-2 rounded-lg md:w-[60%] lg:w-[50%] 2xl:w-[40%]">
         <div class="section_container_title">
-          <h2>GROCERY ITEMS</h2>
+          <h2 class="text-2xl text-center font-semibold text-white">GROCERY ITEMS</h2>
         </div>
 
-        <div class="section_container_dataentry">
-          <input type="text" />
-          <button type="button">+</button>
+        <div class="section_container_dataentry flex items-center justify-center mt-2">
+          <input type="text" class="outline-none rounded-lg bg-[#8E7AB5] text-white text-xs h-8 w-[75%] pl-2"/>
+          <button type="button" class="w-8 h-8 cursor-pointer rounded-full text-white bg-[#8E7AB5] ml-2 hover:bg-opacity-75 active:scale-75 transition-all">+</button>
         </div>
 
-        <div class="section_container_items">
-          <ul class="section_container_items_list"></ul>
+        <div class="section_container_items mt-2">
+          <ul class="section_container_items_list flex flex-col items-center justify-start w-full h-auto"></ul>
         </div>
 
-        <div class="section_container_clearitems">
-          <button type="button">CLEAR ALL ITEMS</button>
+        <div class="section_container_clearitems flex items-center justify-center">
+          <button type="button" class="rounded-lg bg-[#8E7AB5] text-white p-2 cursor-pointer mt-2 hover:bg-opacity-75 active:scale-75 transition-all">CLEAR ALL ITEMS</button>
         </div>
       </section>
     </main>
 
-    <script src="codigo.js"></script>
+    <script type="module" src="./src/script.ts"></script>
   </body>
 </html>

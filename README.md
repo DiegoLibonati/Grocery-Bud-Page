@@ -13,14 +13,21 @@
 2. Join to the correct path of the clone
 3. Open index.html in your favorite navigator
 
+---
+
+1. Clone the repository
+2. Join to the correct path of the clone
+3. Execute: `yarn install`
+4. Execute: `yarn dev`
+
 ## Description
 
 I made a web page that allows you to add items to a list. These items can be edited and deleted. There is also a button to delete all items in the list. It is important to note that every item that is added, is saved in the LocalStorage. This allows to keep the items in each update of the page.
 
 ## Technologies used
 
-1. Javascript
-2. CSS3
+1. Typescript
+2. TailwindCSS
 3. HTML5
 
 ## Portfolio Link
@@ -33,133 +40,165 @@ https://user-images.githubusercontent.com/99032604/199616057-b39c7e07-d4c3-4674-
 
 ## Documentation
 
-The `addToLocalStorage()` function is in charge of adding to the LocalStorage the item that is added to the list:
+The `btnAddData - Event Listener` function is in charge of adding to the LocalStorage the item that is added to the list too:
 
 ```
-function addToLocalStorage(value) {
-  let itemsLocalStorage = getLocalStorage();
+btnAddData.addEventListener("click", () => {
+  const inputValue: string = inputDataEntry.value;
 
-  if (itemsLocalStorage != null && dataEdit == false) {
-    itemsLocalStorage.push({ item: value });
+  if (!inputValue.trim()) return;
 
-    localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
-
-    addItemToContainer(value);
+  if (!stateGrocery.isEditing) {
+    onNewItem(inputValue);
+  } else {
+    onEditItem(inputValue);
   }
 
-  if (itemsLocalStorage == null && dataEdit == false) {
-    dataLocalStorage.push({ item: value });
-
-    localStorage.setItem("list", JSON.stringify(dataLocalStorage));
-
-    addItemToContainer(value);
-  }
-}
+  inputDataEntry.value = "";
+});
 ```
 
-The `addItemToContainer()` function is in charge of adding the HTML of the item that was added to the list:
+The `addItemHtml()` function is in charge of adding the HTML of the item that was added to the list:
 
 ```
-function addItemToContainer(value) {
-  containerShowItems.innerHTML += `
+import { Item } from "../vite-env";
+import { containerShowItems } from "./elements";
+import { itemDelete } from "./itemDelete";
+import { itemEdit } from "./itemEdit";
 
-    <li>
-        <div class="section_container_items_list_li_title">
-            <h2>${value}</h2>
-        </div>
+export const addItemHtml = (item: Item): void => {
+  const itemContainer = document.createElement("li");
+  itemContainer.id = item.id;
+  itemContainer.setAttribute(
+    "class",
+    "flex items-center justify-between w-[75%] h-auto my-2"
+  );
 
-        <div class="section_container_items_list_li_btns">
-            <button type="button" class="btnDelete"><i class="fa-solid fa-trash"></i></button>
-            <button type="button" class="btnEdit"><i class="fa-solid fa-pen-to-square"></i></button>
-        </div>
-    </li>
-    `;
+  const nameContainer = document.createElement("div");
+  nameContainer.setAttribute("class", "section_container_items_list_li_title");
 
-  itemDelete();
-  itemEdit();
-}
+  const itemName = document.createElement("h2");
+  itemName.textContent = item.item;
+  itemName.setAttribute("class", "text-white text-base");
+
+  nameContainer.append(itemName);
+  itemContainer.append(nameContainer);
+
+  const buttonsContainer = document.createElement("div");
+  buttonsContainer.setAttribute(
+    "class",
+    "section_container_items_list_li_btns"
+  );
+
+  const buttonDelete = document.createElement("button");
+  buttonDelete.type = "button";
+  buttonDelete.setAttribute(
+    "class",
+    "btnDelete w-8 h-8 bg-[#8E7AB5] rounded-full mr-2 hover:bg-opacity-75 active:scale-75 transition-all"
+  );
+  buttonDelete?.addEventListener("click", () => itemDelete(item.id));
+
+  const iconDelete = document.createElement("i");
+  iconDelete.setAttribute(
+    "class",
+    "fa-solid fa-trash flex items-center justify-center w-full text-white cursor-pointer"
+  );
+
+  buttonDelete.append(iconDelete);
+  buttonsContainer.append(buttonDelete);
+
+  const buttonEdit = document.createElement("button");
+  buttonEdit.type = "button";
+  buttonEdit.setAttribute("class", "btnEdit w-8 h-8 bg-[#8E7AB5] rounded-full hover:bg-opacity-75 active:scale-75 transition-all");
+  buttonEdit?.addEventListener("click", () => itemEdit(item.id));
+
+  const iconEdit = document.createElement("i");
+  iconEdit.setAttribute(
+    "class",
+    "fa-solid fa-pen-to-square flex items-center justify-center w-full text-white"
+  );
+
+  buttonEdit.append(iconEdit);
+  buttonsContainer.append(buttonEdit);
+  itemContainer.append(buttonsContainer);
+
+  containerShowItems.append(itemContainer);
+};
 ```
 
-The `readLocalStorage()` function is in charge of reading the LocalStorage each time the page is reloaded and adding the items to the list:
+The `onInit()` function is in charge of reading the LocalStorage each time the page is reloaded and adding the items to the list:
 
 ```
-function readLocalStorage() {
-  let itemsLocalStorage = getLocalStorage();
+const onInit = (): void => {
+  const list = getLocalStorage();
 
-  if (itemsLocalStorage != null) {
-    for (let i = 0; i < itemsLocalStorage.length; i++) {
-      addItemToContainer(itemsLocalStorage[i].item);
-    }
-  }
-}
+  list?.forEach((item) => {
+    addItemHtml(item);
+  });
+};
 ```
 
 The `getLocalStorage()` function is in charge of getting the LocalStorage information:
 
 ```
-function getLocalStorage() {
-  return JSON.parse(localStorage.getItem("list"));
-}
+import { Item } from "../vite-env";
+
+export const getLocalStorage = (): Item[] => {
+  return JSON.parse(localStorage.getItem("list")!)
+    ? JSON.parse(localStorage.getItem("list")!)
+    : [];
+};
 ```
 
 The `itemDelete()` function is in charge of deleting an item when it is called:
 
 ```
-function itemDelete(value) {
-  const btnsDelete = document.querySelectorAll(".btnDelete");
+import { getLocalStorage } from "./getLocalStorage";
 
-  btnsDelete.forEach(function (btn) {
-    btn.addEventListener("click", () => {
-      let itemsLocalStorage = getLocalStorage();
+export const itemDelete = (id: string): void => {
+  const list = getLocalStorage();
+  const element = document.getElementById(id);
 
-      let liOfBtn = btn.parentElement.parentElement;
-      let liId =
-        btn.parentElement.parentElement.children[0].children[0].outerText;
+  const newList = list.filter((item) => item.id !== id);
 
-      for (let i = 0; i < itemsLocalStorage.length; i++) {
-        if (liId == itemsLocalStorage[i].item) {
-          const index = itemsLocalStorage.indexOf(itemsLocalStorage[i]);
-
-          itemsLocalStorage.splice(index, 1);
-          localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
-        }
-      }
-
-      liOfBtn.remove();
-    });
-  });
-}
+  localStorage.setItem("list", JSON.stringify(newList));
+  element?.remove();
+};
 ```
 
-The `itemEdit()` function is in charge of editing an item when it is called:
+The `itemEdit()` and `onEdititem()` function is in charge of editing an item when it is called:
 
 ```
-function itemEdit() {
-  const btnsEdit = document.querySelectorAll(".btnEdit");
+import { btnAddData } from "./elements";
+import { stateGrocery } from "./stateGrocery";
 
-  btnsEdit.forEach(function (btn) {
-    btn.addEventListener("click", () => {
-      let liH2 = btn.parentElement.parentElement.children[0].children[0];
-      let liId =
-        btn.parentElement.parentElement.children[0].children[0].outerText;
-      let itemsLocalStorage = getLocalStorage();
-      dataEdit = true;
-      btnAddData.textContent = "✓";
-      inputDataEntry.value = liId;
+export const itemEdit = (id: string): void => {
+  stateGrocery.isEditing = true;
+  stateGrocery.idItemEdit = id;
+  btnAddData.textContent = "✓";
+};
 
-      btnAddData.addEventListener("click", () => {
-        for (let i = 0; i < itemsLocalStorage.length; i++) {
-          if (liId == itemsLocalStorage[i].item) {
-            itemsLocalStorage[i].item = inputDataEntry.value;
-            liH2.innerHTML = itemsLocalStorage[i].item;
-            localStorage.setItem("list", JSON.stringify(itemsLocalStorage));
-          }
-        }
+import { btnAddData } from "./elements";
+import { getLocalStorage } from "./getLocalStorage";
+import { stateGrocery } from "./stateGrocery";
 
-        btnAddData.textContent = "+";
-        dataEdit = false;
-      });
-    });
+export const onEditItem = (value: string): void => {
+  const list = getLocalStorage();
+  const element = document.getElementById(stateGrocery.idItemEdit);
+  const name = element!.children[0].children[0];
+  name.textContent = value;
+
+  const newList = list.map((item) => {
+    if (item.id === stateGrocery.idItemEdit) {
+      item.item = value;
+    }
+    return item;
   });
-}
+
+  localStorage.setItem("list", JSON.stringify(newList));
+
+  stateGrocery.isEditing = false;
+  stateGrocery.idItemEdit = "";
+  btnAddData.textContent = "+";
+};
 ```
