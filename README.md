@@ -36,7 +36,7 @@ I made a web page that allows you to add items to a list. These items can be edi
 
 ## Video
 
-https://user-images.githubusercontent.com/99032604/199616057-b39c7e07-d4c3-4674-8cf2-2324ddcbbc68.mp4
+https://github.com/DiegoLibonati/Grocery-Page/assets/99032604/68a321bf-fbae-4f67-b74a-99ae0e42e297
 
 ## Documentation
 
