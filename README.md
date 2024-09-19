@@ -1,4 +1,4 @@
-# Grocery-Page
+# Grocery Bud Page
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ I made a web page that allows you to add items to a list. These items can be edi
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/38`](https://www.diegolibonati.com.ar/#/project/38)
+[`https://www.diegolibonati.com.ar/#/project/Grocery-Bud-Page`](https://www.diegolibonati.com.ar/#/project/Grocery-Bud-Page)
 
 ## Video
 
