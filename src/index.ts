@@ -40,7 +40,7 @@ const addItemHtml = (item: Item): void => {
   buttonDelete.setAttribute("aria-label", `delete item ${item.id}`);
   buttonDelete.setAttribute(
     "class",
-    "btnDelete w-8 h-8 bg-[#8E7AB5] rounded-full mr-2 hover:bg-opacity-75 active:scale-75 transition-all"
+    "btnDelete w-8 h-8 bg-primary rounded-full mr-2 hover:bg-opacity-75 active:scale-75 transition-all"
   );
   buttonDelete?.addEventListener("click", () => handleItemDelete(item.id));
 
@@ -58,7 +58,7 @@ const addItemHtml = (item: Item): void => {
   buttonEdit.setAttribute("aria-label", `edit item ${item.id}`);
   buttonEdit.setAttribute(
     "class",
-    "btnEdit w-8 h-8 bg-[#8E7AB5] rounded-full hover:bg-opacity-75 active:scale-75 transition-all"
+    "btnEdit w-8 h-8 bg-primary rounded-full hover:bg-opacity-75 active:scale-75 transition-all"
   );
   buttonEdit?.addEventListener("click", () => handleItemEdit(item.id));
 

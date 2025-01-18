@@ -1,10 +1,14 @@
 import { setLocalStorage } from "./setLocalStorage";
 
-import { LOCAL_STORAGE_MOCKS } from "../tests/jest.setup";
+import { mockLocalStorage } from "../tests/jest.constants";
 
-test("The setItem of localStorage must be called.", () => {
-  setLocalStorage("key", 2);
+describe("setLocalStorage.ts", () => {
+  describe("General Tests.", () => {
+    test("The setItem of localStorage must be called.", () => {
+      setLocalStorage("key", 2);
 
-  expect(LOCAL_STORAGE_MOCKS.setItem).toHaveBeenCalledTimes(1);
-  expect(LOCAL_STORAGE_MOCKS.setItem).toHaveBeenCalledWith("key", "2");
+      expect(mockLocalStorage.setItem).toHaveBeenCalledTimes(1);
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith("key", "2");
+    });
+  });
 });
