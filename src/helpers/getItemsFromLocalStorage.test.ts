@@ -2,7 +2,7 @@ import { getItemsFromLocalStorage } from "./getItemsFromLocalStorage";
 
 import { LOCAL_STORAGE_ITEMS_KEY } from "../constants/constants";
 
-import { mockLocalStorage } from "../tests/jest.constants";
+import { mockLocalStorage } from "../../tests/jest.constants";
 
 describe("getItemsFromLocalStorage.ts", () => {
   describe("General Tests.", () => {
