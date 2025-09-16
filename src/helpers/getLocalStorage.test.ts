@@ -1,6 +1,6 @@
-import { getLocalStorage } from "./getLocalStorage";
+import { getLocalStorage } from "@src/helpers/getLocalStorage";
 
-import { mockLocalStorage } from "../../tests/jest.constants";
+import { mockLocalStorage } from "@tests/jest.constants";
 
 describe("getLocalStorage.ts", () => {
   describe("General Tests.", () => {

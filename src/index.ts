@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { Item } from "./entities/vite-env";
+import { Item } from "@src/entities/vite-env";
 
-import { getElements } from "./helpers/getElements";
-import { getItemsFromLocalStorage } from "./helpers/getItemsFromLocalStorage";
-import { setLocalStorage } from "./helpers/setLocalStorage";
+import { getElements } from "@src/helpers/getElements";
+import { getItemsFromLocalStorage } from "@src/helpers/getItemsFromLocalStorage";
+import { setLocalStorage } from "@src/helpers/setLocalStorage";
 
-import { stateGrocery } from "./stateGrocery";
-import { LOCAL_STORAGE_ITEMS_KEY } from "./constants/constants";
+import { stateGrocery } from "@src/stateGrocery";
+import { LOCAL_STORAGE_ITEMS_KEY } from "@src/constants/constants";
 
 const addItemHtml = (item: Item): void => {
   const { containerShowItems } = getElements();

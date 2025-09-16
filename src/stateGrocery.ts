@@ -1,4 +1,4 @@
-import { StateGrocery } from "./entities/vite-env";
+import { StateGrocery } from "@src/entities/vite-env";
 
 export const stateGrocery: StateGrocery = {
   isEditing: false,

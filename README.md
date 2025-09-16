@@ -1,5 +1,11 @@
 # Grocery Bud Page
 
+## Educational Purpose
+
+This project was created primarily for **educational and learning purposes**.  
+While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
+The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
+
 ## Getting Started
 
 1. Clone the repository
@@ -39,8 +45,9 @@ I made a web page that allows you to add items to a list. These items can be edi
 "postcss": "^8.4.35"
 "tailwindcss": "^3.4.1"
 "ts-jest": "^29.2.5"
+"ts-node": "^10.9.2"
 "typescript": "^5.2.2"
-"vite": "^5.0.8"
+"vite": "^7.1.5"
 ```
 
 ## Portfolio Link
@@ -55,3 +62,5 @@ https://github.com/DiegoLibonati/Grocery-Page/assets/99032604/68a321bf-fbae-4f67
 
 1. Join to the correct path of the clone
 2. Execute: `yarn test` or `npm test`
+
+## Known Issues
