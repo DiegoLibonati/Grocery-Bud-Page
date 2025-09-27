@@ -22,6 +22,7 @@ I made a web page that allows you to add items to a list. These items can be edi
 1. Typescript
 2. TailwindCSS
 3. HTML5
+4. Vite
 
 ## Libraries used
 
