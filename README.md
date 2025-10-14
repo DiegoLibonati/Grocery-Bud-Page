@@ -21,8 +21,9 @@ I made a web page that allows you to add items to a list. These items can be edi
 
 1. Typescript
 2. TailwindCSS
-3. HTML5
-4. Vite
+3. CSS3
+4. HTML5
+5. Vite
 
 ## Libraries used
 

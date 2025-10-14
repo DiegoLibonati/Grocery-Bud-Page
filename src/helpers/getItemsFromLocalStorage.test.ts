@@ -1,6 +1,6 @@
 import { getItemsFromLocalStorage } from "@src/helpers/getItemsFromLocalStorage";
 
-import { LOCAL_STORAGE_ITEMS_KEY } from "@src/constants/constants";
+import { LOCAL_STORAGE_ITEMS_KEY } from "@src/constants/vars";
 
 import { mockLocalStorage } from "@tests/jest.constants";
 
