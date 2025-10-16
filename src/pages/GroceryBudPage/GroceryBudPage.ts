@@ -17,7 +17,10 @@ const handleClickAdd = (e: SubmitEvent, input: HTMLInputElement) => {
   if (idItemEdit) {
     itemStore.setEditItem(value);
     input.value = "";
-    (e.currentTarget as HTMLButtonElement).textContent = "+";
+    const btnAdd = (
+      e.currentTarget as HTMLFormElement
+    ).querySelector<HTMLButtonElement>("#add-item");
+    btnAdd!.textContent = "+";
     return;
   }
 

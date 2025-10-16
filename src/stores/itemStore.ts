@@ -5,7 +5,7 @@ import { ItemState } from "@src/entities/states";
 import { getItemsFromLocalStorage } from "@src/helpers/getItemsFromLocalStorage";
 import { setLocalStorage } from "@src/helpers/setLocalStorage";
 
-import { Store } from "@src/stores/store";
+import { Store } from "@src/core/store";
 
 export class ItemStore extends Store<ItemState> {
   constructor(initialState: ItemState) {

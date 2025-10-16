@@ -372,10 +372,12 @@ describe("GroceryBudPage.ts", () => {
         cancelable: true,
       });
       Object.defineProperty(submitEvent, "currentTarget", {
-        value: addButton,
+        value: form,
         writable: false,
       });
       form?.dispatchEvent(submitEvent);
+
+      screen.debug();
 
       expect(addButton.textContent).toBe("+");
     });
