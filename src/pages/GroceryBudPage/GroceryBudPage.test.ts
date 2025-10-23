@@ -68,7 +68,7 @@ describe("GroceryBudPage.ts", () => {
     test("It should render the main card section", () => {
       const { container } = renderComponent();
 
-      const card = container.querySelector(".card");
+      const card = container.querySelector<HTMLElement>(".card");
 
       expect(card).toBeInTheDocument();
       expect(card?.className).toContain("bg-secondary");
@@ -78,7 +78,8 @@ describe("GroceryBudPage.ts", () => {
     test("It should render the header with title", () => {
       const { container } = renderComponent();
 
-      const header = container.querySelector(".card__header h2");
+      const header =
+        container.querySelector<HTMLHeadingElement>(".card__header h2");
 
       expect(header).toBeInTheDocument();
       expect(header?.textContent).toContain("GROCERY ITEMS");
@@ -149,7 +150,8 @@ describe("GroceryBudPage.ts", () => {
     test("It should render items list container", () => {
       const { container } = renderComponent();
 
-      const itemsList = container.querySelector(".card__items-list");
+      const itemsList =
+        container.querySelector<HTMLUListElement>(".card__items-list");
 
       expect(itemsList).toBeInTheDocument();
       expect(itemsList?.tagName).toBe("UL");
@@ -158,7 +160,8 @@ describe("GroceryBudPage.ts", () => {
     test("It should render empty list when no items", () => {
       const { container } = renderComponent();
 
-      const itemsList = container.querySelector(".card__items-list");
+      const itemsList =
+        container.querySelector<HTMLUListElement>(".card__items-list");
 
       expect(itemsList?.children.length).toBe(0);
     });
@@ -583,21 +586,37 @@ describe("GroceryBudPage.ts", () => {
     test("It should have all main sections", () => {
       const { container } = renderComponent();
 
-      expect(container.querySelector(".card__header")).toBeInTheDocument();
-      expect(container.querySelector(".card__data-entry")).toBeInTheDocument();
-      expect(container.querySelector(".card__items")).toBeInTheDocument();
-      expect(container.querySelector(".card__actions")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".card__header")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLFormElement>(".card__data-entry")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".card__items")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".card__actions")
+      ).toBeInTheDocument();
     });
 
     test("It should have correct section structure", () => {
       const { container } = renderComponent();
 
-      const section = container.querySelector("section");
+      const section = container.querySelector<HTMLElement>("section");
 
-      expect(section?.querySelector(".card__header")).toBeInTheDocument();
-      expect(section?.querySelector(".card__data-entry")).toBeInTheDocument();
-      expect(section?.querySelector(".card__items")).toBeInTheDocument();
-      expect(section?.querySelector(".card__actions")).toBeInTheDocument();
+      expect(
+        section?.querySelector<HTMLDivElement>(".card__header")
+      ).toBeInTheDocument();
+      expect(
+        section?.querySelector<HTMLFormElement>(".card__data-entry")
+      ).toBeInTheDocument();
+      expect(
+        section?.querySelector<HTMLDivElement>(".card__items")
+      ).toBeInTheDocument();
+      expect(
+        section?.querySelector<HTMLDivElement>(".card__actions")
+      ).toBeInTheDocument();
     });
 
     test("Form should be inside card__data-entry section", () => {
@@ -607,8 +626,12 @@ describe("GroceryBudPage.ts", () => {
         container.querySelector<HTMLFormElement>(".card__data-entry");
 
       expect(form?.tagName).toBe("FORM");
-      expect(form?.querySelector("input")).toBeInTheDocument();
-      expect(form?.querySelector("button")).toBeInTheDocument();
+      expect(
+        form?.querySelector<HTMLInputElement>("input")
+      ).toBeInTheDocument();
+      expect(
+        form?.querySelector<HTMLButtonElement>("button")
+      ).toBeInTheDocument();
     });
   });
 });

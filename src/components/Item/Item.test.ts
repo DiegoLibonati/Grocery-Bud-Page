@@ -82,7 +82,9 @@ describe("Item.ts", () => {
     test("It should render the item text correctly", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header).toBeInTheDocument();
       expect(header?.textContent).toBe(props.text);
@@ -91,7 +93,8 @@ describe("Item.ts", () => {
     test("It should contain item header section", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const header = container.querySelector(".card__item-header");
+      const header =
+        container.querySelector<HTMLDivElement>(".card__item-header");
 
       expect(header).toBeInTheDocument();
     });
@@ -99,7 +102,9 @@ describe("Item.ts", () => {
     test("It should contain item actions section", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const actions = container.querySelector(".card__item-actions");
+      const actions = container.querySelector<HTMLDivElement>(
+        ".card__item-actions"
+      );
 
       expect(actions).toBeInTheDocument();
     });
@@ -134,7 +139,9 @@ describe("Item.ts", () => {
     test("Delete button should have correct classes", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const deleteButton = container.querySelector(".card__item-action-delete");
+      const deleteButton = container.querySelector<HTMLButtonElement>(
+        ".card__item-action-delete"
+      );
 
       expect(deleteButton?.className).toContain("w-8");
       expect(deleteButton?.className).toContain("h-8");
@@ -145,7 +152,9 @@ describe("Item.ts", () => {
     test("Edit button should have correct classes", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const editButton = container.querySelector(".card__item-action-edit");
+      const editButton = container.querySelector<HTMLButtonElement>(
+        ".card__item-action-edit"
+      );
 
       expect(editButton?.className).toContain("w-8");
       expect(editButton?.className).toContain("h-8");
@@ -156,8 +165,10 @@ describe("Item.ts", () => {
     test("Delete button should contain trash icon", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const deleteButton = container.querySelector(".card__item-action-delete");
-      const icon = deleteButton?.querySelector(".fa-trash");
+      const deleteButton = container.querySelector<HTMLButtonElement>(
+        ".card__item-action-delete"
+      );
+      const icon = deleteButton?.querySelector<HTMLElement>(".fa-trash");
 
       expect(icon).toBeInTheDocument();
       expect(icon?.classList.contains("fa-solid")).toBe(true);
@@ -166,8 +177,10 @@ describe("Item.ts", () => {
     test("Edit button should contain edit icon", () => {
       const { container } = renderComponent(props.id, props.text);
 
-      const editButton = container.querySelector(".card__item-action-edit");
-      const icon = editButton?.querySelector(".fa-pen-to-square");
+      const editButton = container.querySelector<HTMLButtonElement>(
+        ".card__item-action-edit"
+      );
+      const icon = editButton?.querySelector<HTMLElement>(".fa-pen-to-square");
 
       expect(icon).toBeInTheDocument();
       expect(icon?.classList.contains("fa-solid")).toBe(true);
@@ -306,7 +319,9 @@ describe("Item.ts", () => {
     test("It should render item with short text", () => {
       const { container } = renderComponent("item-1", "Short");
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header?.textContent).toBe("Short");
     });
@@ -316,7 +331,9 @@ describe("Item.ts", () => {
         "This is a very long text that should still be rendered correctly without any issues";
       const { container } = renderComponent("item-2", longText);
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header?.textContent).toBe(longText);
     });
@@ -325,7 +342,9 @@ describe("Item.ts", () => {
       const specialText = "Special <>&\"' characters";
       const { container } = renderComponent("item-3", specialText);
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header?.textContent).toBe(specialText);
     });
@@ -336,7 +355,9 @@ describe("Item.ts", () => {
 
       expect(item1.container.id).toBe("item-1");
       expect(item2.container.id).toBe("item-2");
-      expect(document.querySelectorAll(".card__item")).toHaveLength(2);
+      expect(
+        document.querySelectorAll<HTMLLIElement>(".card__item")
+      ).toHaveLength(2);
     });
   });
 
@@ -344,7 +365,9 @@ describe("Item.ts", () => {
     test("It should handle empty text", () => {
       const { container } = renderComponent("empty-item", "");
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header?.textContent).toBe("");
       expect(header).toBeInTheDocument();
@@ -353,7 +376,9 @@ describe("Item.ts", () => {
     test("It should handle numeric text", () => {
       const { container } = renderComponent("numeric-item", "12345");
 
-      const header = container.querySelector(".card__item-header h2");
+      const header = container.querySelector<HTMLHeadingElement>(
+        ".card__item-header h2"
+      );
 
       expect(header?.textContent).toBe("12345");
     });

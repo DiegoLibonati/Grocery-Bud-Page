@@ -280,7 +280,9 @@ describe("ButtonPrimary.ts", () => {
       );
 
       expect(container.innerHTML).toBe(htmlContent);
-      expect(container.querySelector(".icon")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLSpanElement>(".icon")
+      ).toBeInTheDocument();
     });
 
     test("It should render SVG content correctly", () => {
@@ -292,8 +294,10 @@ describe("ButtonPrimary.ts", () => {
         svgContent
       );
 
-      expect(container.querySelector("svg")).toBeInTheDocument();
-      expect(container.querySelector("circle")).toBeInTheDocument();
+      expect(container.querySelector<HTMLElement>("svg")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>("circle")
+      ).toBeInTheDocument();
     });
   });
 
@@ -351,8 +355,8 @@ describe("ButtonPrimary.ts", () => {
 
       const button = screen.getByRole("button", { name: /complex button/i });
 
-      expect(button.querySelector("div")).toBeInTheDocument();
-      expect(button.querySelectorAll("span")).toHaveLength(2);
+      expect(button.querySelector<HTMLDivElement>("div")).toBeInTheDocument();
+      expect(button.querySelectorAll<HTMLSpanElement>("span")).toHaveLength(2);
     });
   });
 });
