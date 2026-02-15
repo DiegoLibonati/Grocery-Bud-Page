@@ -1,4 +1,5 @@
-import { ButtonPrimaryProps } from "@src/entities/props";
+import type { ButtonPrimaryProps } from "@/types/props";
+import type { ButtonPrimaryComponent } from "@/types/components";
 
 export const ButtonPrimary = ({
   id,
@@ -7,8 +8,8 @@ export const ButtonPrimary = ({
   children,
   className,
   onClick,
-}: ButtonPrimaryProps): HTMLButtonElement => {
-  const button = document.createElement("button");
+}: ButtonPrimaryProps): ButtonPrimaryComponent => {
+  const button = document.createElement("button") as ButtonPrimaryComponent;
 
   button.className = `cursor-pointer bg-primary hover:bg-opacity-75 active:scale-75 transition-all ${
     className ?? ""
@@ -18,8 +19,13 @@ export const ButtonPrimary = ({
   button.innerHTML = children ?? "";
   button.type = type ?? "button";
 
-  if (button.type === "button" && onClick)
+  if (button.type === "button" && onClick) {
     button.addEventListener("click", onClick);
+
+    button.cleanup = (): void => {
+      button.removeEventListener("click", onClick);
+    };
+  }
 
   return button;
 };

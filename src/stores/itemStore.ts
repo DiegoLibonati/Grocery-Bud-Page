@@ -1,16 +1,16 @@
-import { LOCAL_STORAGE_ITEMS_KEY } from "@src/constants/vars";
-import { Item } from "@src/entities/app";
-import { ItemState } from "@src/entities/states";
+import { LOCAL_STORAGE_ITEMS_KEY } from "@/constants/vars";
+import type { Item } from "@/types/app";
+import type { ItemState } from "@/types/states";
 
-import { getItemsFromLocalStorage } from "@src/helpers/getItemsFromLocalStorage";
-import { setLocalStorage } from "@src/helpers/setLocalStorage";
+import { getItemsFromLocalStorage } from "@/helpers/getItemsFromLocalStorage";
+import { setLocalStorage } from "@/helpers/setLocalStorage";
 
-import { Store } from "@src/core/store";
+import { Store } from "@/core/store";
 
 export class ItemStore extends Store<ItemState> {
-  constructor(initialState: ItemState) {
-    super(initialState);
-  }
+  // constructor(initialState: ItemState) {
+  //   super(initialState);
+  // }
 
   public getItemById(id: string): Item | undefined {
     const { items } = this.getState();
@@ -29,7 +29,7 @@ export class ItemStore extends Store<ItemState> {
 
     this.setState({ items: [...items, item] });
 
-    setLocalStorage<Item[]>(LOCAL_STORAGE_ITEMS_KEY, this.get("items"));
+    setLocalStorage(LOCAL_STORAGE_ITEMS_KEY, this.get("items"));
   }
 
   public deleteItemById(id: string): void {
@@ -38,7 +38,7 @@ export class ItemStore extends Store<ItemState> {
     const newItems = items.filter((item) => item.id !== id);
 
     this.setItems(newItems);
-    setLocalStorage<Item[]>(LOCAL_STORAGE_ITEMS_KEY, newItems);
+    setLocalStorage(LOCAL_STORAGE_ITEMS_KEY, newItems);
   }
 
   public setEditingItem(id: string): void {
@@ -49,7 +49,7 @@ export class ItemStore extends Store<ItemState> {
     const { items, idItemEdit } = this.getState();
 
     const newItems = items.map((i) => {
-      if (i.id == idItemEdit) {
+      if (i.id === idItemEdit) {
         return {
           id: i.id,
           text: text,
@@ -61,7 +61,7 @@ export class ItemStore extends Store<ItemState> {
 
     this.setItems(newItems);
     this.setEditingItem("");
-    setLocalStorage<Item[]>(LOCAL_STORAGE_ITEMS_KEY, newItems);
+    setLocalStorage(LOCAL_STORAGE_ITEMS_KEY, newItems);
   }
 }
 

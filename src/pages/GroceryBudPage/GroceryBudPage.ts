@@ -1,18 +1,22 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { Item as ItemT } from "@src/entities/app";
+import type { Item as ItemT } from "@/types/app";
+import type { Page } from "@/types/pages";
+import type { ItemComponent } from "@/types/components";
 
-import { ButtonPrimary } from "@src/components/ButtonPrimary/ButtonPrimary";
-import { Item } from "@src/components/Item/Item";
+import { ButtonPrimary } from "@/components/ButtonPrimary/ButtonPrimary";
+import { Item } from "@/components/Item/Item";
 
-import { itemStore } from "@src/stores/itemStore";
+import { itemStore } from "@/stores/itemStore";
 
-const handleClickAdd = (e: SubmitEvent, input: HTMLInputElement) => {
+const handleClickAdd = (e: SubmitEvent, input: HTMLInputElement): void => {
   e.preventDefault();
 
   const { idItemEdit } = itemStore.getState();
 
   const value = input.value.trim();
+
+  if (!value) return;
 
   if (idItemEdit) {
     itemStore.setEditItem(value);
@@ -20,7 +24,7 @@ const handleClickAdd = (e: SubmitEvent, input: HTMLInputElement) => {
     const btnAdd = (
       e.currentTarget as HTMLFormElement
     ).querySelector<HTMLButtonElement>("#add-item");
-    btnAdd!.textContent = "+";
+    if (btnAdd) btnAdd.textContent = "+";
     return;
   }
 
@@ -34,12 +38,12 @@ const handleClickAdd = (e: SubmitEvent, input: HTMLInputElement) => {
   input.value = "";
 };
 
-const handleClearAllItems = () => {
+const handleClearAllItems = (): void => {
   itemStore.setItems([]);
 };
 
-export const GroceryBudPage = (): HTMLElement => {
-  const main = document.createElement("main");
+export const GroceryBudPage = (): Page => {
+  const main = document.createElement("main") as Page;
   main.className = `flex items-center justify-center w-full h-screen bg-primary main-wrapper`;
 
   main.innerHTML = `
@@ -70,7 +74,8 @@ export const GroceryBudPage = (): HTMLElement => {
     </section>
   `;
 
-  const cardDataEntry = main.querySelector<HTMLDivElement>(".card__data-entry");
+  const cardDataEntry =
+    main.querySelector<HTMLFormElement>(".card__data-entry");
   const cardActions = main.querySelector<HTMLDivElement>(".card__actions");
 
   const input = main.querySelector<HTMLInputElement>(".card__data-entry input");
@@ -82,6 +87,7 @@ export const GroceryBudPage = (): HTMLElement => {
     type: "submit",
     children: "+",
   });
+
   const buttonClearAllItems = ButtonPrimary({
     id: "clear-all-items",
     ariaLabel: "clear all items",
@@ -90,15 +96,27 @@ export const GroceryBudPage = (): HTMLElement => {
     onClick: handleClearAllItems,
   });
 
-  cardDataEntry?.addEventListener("submit", (e) => handleClickAdd(e, input!));
+  const handleFormSubmit = (e: SubmitEvent): void => {
+    handleClickAdd(e, input!);
+  };
+
+  cardDataEntry?.addEventListener("submit", handleFormSubmit);
   cardDataEntry?.append(buttonAdd);
 
   cardActions?.append(buttonClearAllItems);
 
-  const renderItems = () => {
+  const currentItems = new Map<string, ItemComponent>();
+
+  const renderItems = (): void => {
     const { items } = itemStore.getState();
 
     const cardItems = main.querySelector<HTMLUListElement>(".card__items-list");
+
+    currentItems.forEach((item) => {
+      item.cleanup?.();
+    });
+    currentItems.clear();
+
     cardItems?.replaceChildren();
 
     items.forEach((i) => {
@@ -107,13 +125,29 @@ export const GroceryBudPage = (): HTMLElement => {
         text: i.text,
       });
 
+      currentItems.set(i.id, item);
+
       cardItems?.append(item);
     });
   };
 
   renderItems();
 
-  itemStore.subscribe("items", renderItems);
+  const unsubscribe = itemStore.subscribe("items", renderItems);
+
+  main.cleanup = (): void => {
+    unsubscribe();
+
+    cardDataEntry?.removeEventListener("submit", handleFormSubmit);
+
+    buttonAdd.cleanup?.();
+    buttonClearAllItems.cleanup?.();
+
+    currentItems.forEach((item) => {
+      item.cleanup?.();
+    });
+    currentItems.clear();
+  };
 
   return main;
 };
