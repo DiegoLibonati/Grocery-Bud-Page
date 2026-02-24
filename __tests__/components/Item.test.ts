@@ -9,6 +9,7 @@ import { Item } from "@/components/Item/Item";
 import { itemStore } from "@/stores/itemStore";
 
 import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockItems } from "@tests/__mocks__/items.mock";
 
 const renderComponent = (props: ItemProps): ItemComponent => {
   const container = Item(props);
@@ -29,7 +30,7 @@ describe("Item Component", () => {
   });
 
   const defaultProps: ItemProps = {
-    id: "item-1",
+    id: "1",
     text: "Buy groceries",
   };
 
@@ -39,7 +40,7 @@ describe("Item Component", () => {
     const item = document.querySelector<HTMLLIElement>(".card__item");
     expect(item).toBeInTheDocument();
     expect(item?.tagName).toBe("LI");
-    expect(item).toHaveAttribute("id", "item-1");
+    expect(item).toHaveAttribute("id", "1");
   });
 
   it("should render item text", () => {
@@ -52,22 +53,21 @@ describe("Item Component", () => {
     renderComponent(defaultProps);
 
     expect(
-      screen.getByRole("button", { name: "delete item item-1" })
+      screen.getByRole("button", { name: "delete item 1" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "edit item item-1" })
+      screen.getByRole("button", { name: "edit item 1" })
     ).toBeInTheDocument();
   });
 
   it("should delete item when delete button is clicked", async () => {
     const user = userEvent.setup();
-    const mockItems = [defaultProps];
     itemStore.setItems(mockItems);
 
     renderComponent(defaultProps);
 
     const deleteButton = screen.getByRole("button", {
-      name: "delete item item-1",
+      name: "delete item 1",
     });
     await user.click(deleteButton);
 

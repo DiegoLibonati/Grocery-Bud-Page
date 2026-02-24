@@ -1,8 +1,7 @@
-import type { Item } from "@/types/app";
-
 import { getItemsFromLocalStorage } from "@/helpers/getItemsFromLocalStorage";
 
 import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockItems } from "@tests/__mocks__/items.mock";
 
 describe("getItemsFromLocalStorage", () => {
   beforeEach(() => {
@@ -14,11 +13,6 @@ describe("getItemsFromLocalStorage", () => {
   });
 
   it("should return items from localStorage", () => {
-    const mockItems: Item[] = [
-      { id: "1", text: "Buy milk" },
-      { id: "2", text: "Buy eggs" },
-    ];
-
     mocksLocalStorage.setItem("items", JSON.stringify(mockItems));
 
     const result = getItemsFromLocalStorage();

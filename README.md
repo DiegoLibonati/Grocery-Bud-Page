@@ -41,7 +41,6 @@ I made a web page that allows you to add items to a list. These items can be edi
 "@eslint/js": "^9.39.2"
 "@testing-library/dom": "^10.4.0"
 "@testing-library/jest-dom": "^6.6.3"
-"@testing-library/react": "^16.0.1"
 "@testing-library/user-event": "^14.5.2"
 "@types/jest": "^29.5.14"
 "@types/uuid": "^9.0.7"
