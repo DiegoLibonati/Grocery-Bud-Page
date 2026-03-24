@@ -54,7 +54,7 @@ describe("GroceryBudPage", () => {
   it("should render add button", () => {
     renderPage();
 
-    const addButton = screen.getByRole("button", { name: "add item" });
+    const addButton = screen.getByRole("button", { name: "Add grocery item" });
     expect(addButton).toBeInTheDocument();
     expect(addButton.textContent).toBe("+");
   });
@@ -62,7 +62,9 @@ describe("GroceryBudPage", () => {
   it("should render clear all items button", () => {
     renderPage();
 
-    const clearButton = screen.getByRole("button", { name: "clear all items" });
+    const clearButton = screen.getByRole("button", {
+      name: "Clear all grocery items",
+    });
     expect(clearButton).toBeInTheDocument();
   });
 
@@ -99,7 +101,9 @@ describe("GroceryBudPage", () => {
 
     renderPage();
 
-    const clearButton = screen.getByRole("button", { name: "clear all items" });
+    const clearButton = screen.getByRole("button", {
+      name: "Clear all grocery items",
+    });
     await user.click(clearButton);
 
     const items = document.querySelectorAll<HTMLLIElement>(".card__item");

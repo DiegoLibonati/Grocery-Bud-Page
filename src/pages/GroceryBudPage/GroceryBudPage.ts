@@ -83,14 +83,14 @@ export const GroceryBudPage = (): Page => {
   const buttonAdd = ButtonPrimary({
     id: "add-item",
     className: "w-8 h-8 text-white rounded-full ml-2",
-    ariaLabel: "add item",
+    ariaLabel: "Add grocery item",
     type: "submit",
     children: "+",
   });
 
   const buttonClearAllItems = ButtonPrimary({
     id: "clear-all-items",
-    ariaLabel: "clear all items",
+    ariaLabel: "Clear all grocery items",
     className: "text-white rounded-lg p-2 mt-2",
     children: "CLEAR ALL ITEMS",
     onClick: handleClearAllItems,

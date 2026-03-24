@@ -53,10 +53,12 @@ describe("Item Component", () => {
     renderComponent(defaultProps);
 
     expect(
-      screen.getByRole("button", { name: "delete item 1" })
+      screen.getByRole("button", {
+        name: 'Delete grocery item "Buy groceries"',
+      })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "edit item 1" })
+      screen.getByRole("button", { name: 'Edit grocery item "Buy groceries"' })
     ).toBeInTheDocument();
   });
 
@@ -67,7 +69,7 @@ describe("Item Component", () => {
     renderComponent(defaultProps);
 
     const deleteButton = screen.getByRole("button", {
-      name: "delete item 1",
+      name: 'Delete grocery item "Buy groceries"',
     });
     await user.click(deleteButton);
 

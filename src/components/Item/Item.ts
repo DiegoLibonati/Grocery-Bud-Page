@@ -45,7 +45,7 @@ export const Item = ({ id, text }: ItemProps): ItemComponent => {
   const buttonDelete = ButtonPrimary({
     id: "delete-item",
     className: "w-8 h-8 rounded-full mr-2 card__item-action-delete",
-    ariaLabel: `delete item ${id}`,
+    ariaLabel: `Delete grocery item "${text}"`,
     children:
       '<i class="fa-solid fa-trash flex items-center justify-center w-full text-white cursor-pointer"></i>',
     onClick: () => {
@@ -56,7 +56,7 @@ export const Item = ({ id, text }: ItemProps): ItemComponent => {
   const buttonEdit = ButtonPrimary({
     id: "edit-item",
     className: "w-8 h-8 rounded-full mr-2 card__item-action-edit",
-    ariaLabel: `edit item ${id}`,
+    ariaLabel: `Edit grocery item "${text}"`,
     children:
       "<i class='fa-solid fa-pen-to-square flex items-center justify-center w-full text-white'></i>",
     onClick: () => {
