@@ -1,7 +1,7 @@
 import type { ItemProps } from "@/types/props";
 import type { ItemComponent } from "@/types/components";
 
-import { ButtonPrimary } from "@/components/ButtonPrimary/ButtonPrimary";
+import ButtonPrimary from "@/components/ButtonPrimary/ButtonPrimary";
 
 import { itemStore } from "@/stores/itemStore";
 
@@ -23,7 +23,7 @@ const handleEditItem = (
   buttonAdd.textContent = "✓";
 };
 
-export const Item = ({ id, text }: ItemProps): ItemComponent => {
+const Item = ({ id, text }: ItemProps): ItemComponent => {
   const itemRoot = document.createElement("li") as ItemComponent;
   itemRoot.id = id;
   itemRoot.className =
@@ -82,3 +82,5 @@ export const Item = ({ id, text }: ItemProps): ItemComponent => {
 
   return itemRoot;
 };
+
+export default Item;

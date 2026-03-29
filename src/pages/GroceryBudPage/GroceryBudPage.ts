@@ -4,8 +4,8 @@ import type { Item as ItemT } from "@/types/app";
 import type { Page } from "@/types/pages";
 import type { ItemComponent } from "@/types/components";
 
-import { ButtonPrimary } from "@/components/ButtonPrimary/ButtonPrimary";
-import { Item } from "@/components/Item/Item";
+import ButtonPrimary from "@/components/ButtonPrimary/ButtonPrimary";
+import Item from "@/components/Item/Item";
 
 import { itemStore } from "@/stores/itemStore";
 
@@ -42,7 +42,7 @@ const handleClearAllItems = (): void => {
   itemStore.setItems([]);
 };
 
-export const GroceryBudPage = (): Page => {
+const GroceryBudPage = (): Page => {
   const main = document.createElement("main") as Page;
   main.className = `flex items-center justify-center w-full h-screen bg-primary main-wrapper`;
 
@@ -151,3 +151,5 @@ export const GroceryBudPage = (): Page => {
 
   return main;
 };
+
+export default GroceryBudPage;

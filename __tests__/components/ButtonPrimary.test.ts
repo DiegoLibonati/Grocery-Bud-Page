@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import type { ButtonPrimaryProps } from "@/types/props";
 import type { ButtonPrimaryComponent } from "@/types/components";
 
-import { ButtonPrimary } from "@/components/ButtonPrimary/ButtonPrimary";
+import ButtonPrimary from "@/components/ButtonPrimary/ButtonPrimary";
 
 const renderComponent = (props: ButtonPrimaryProps): ButtonPrimaryComponent => {
   const container = ButtonPrimary(props);

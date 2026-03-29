@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import type { ItemProps } from "@/types/props";
 import type { ItemComponent } from "@/types/components";
 
-import { Item } from "@/components/Item/Item";
+import Item from "@/components/Item/Item";
 
 import { itemStore } from "@/stores/itemStore";
 

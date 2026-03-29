@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import type { Page } from "@/types/pages";
 
-import { GroceryBudPage } from "@/pages/GroceryBudPage/GroceryBudPage";
+import GroceryBudPage from "@/pages/GroceryBudPage/GroceryBudPage";
 
 import { itemStore } from "@/stores/itemStore";
 

@@ -1,5 +1,5 @@
 import "@/index.css";
-import { GroceryBudPage } from "@/pages/GroceryBudPage/GroceryBudPage";
+import GroceryBudPage from "@/pages/GroceryBudPage/GroceryBudPage";
 
 const onInit = (): void => {
   const app = document.querySelector<HTMLDivElement>("#app");
