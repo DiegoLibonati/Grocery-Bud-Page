@@ -2,6 +2,8 @@ import "@testing-library/jest-dom";
 
 import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
 
+const mockUuidV4 = jest.fn(() => "mocked-uuid-1234");
+
 Object.defineProperty(global, "localStorage", {
   value: {
     getItem: mocksLocalStorage.getItem,
@@ -15,5 +17,5 @@ Object.defineProperty(global, "localStorage", {
 });
 
 jest.mock("uuid", () => ({
-  v4: jest.fn(() => "mocked-uuid-1234"),
+  v4: mockUuidV4,
 }));
