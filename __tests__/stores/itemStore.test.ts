@@ -2,13 +2,13 @@ import type { Item } from "@/types/app";
 
 import { ItemStore } from "@/stores/itemStore";
 
-import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 
 describe("ItemStore", () => {
   let store: ItemStore;
 
   beforeEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     store = new ItemStore({
       items: [],
       idItemEdit: "",
@@ -16,7 +16,7 @@ describe("ItemStore", () => {
   });
 
   afterEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
   });
 
   it("should initialize with empty items", () => {
@@ -39,7 +39,7 @@ describe("ItemStore", () => {
 
     store.addItem(newItem);
 
-    const stored = mocksLocalStorage.getItem("items");
+    const stored = mockLocalStorage.getItem("items");
     expect(stored).toBe(JSON.stringify([newItem]));
   });
 
@@ -73,7 +73,7 @@ describe("ItemStore", () => {
 
     store.deleteItemById("1");
 
-    const stored = mocksLocalStorage.getItem("items");
+    const stored = mockLocalStorage.getItem("items");
     expect(stored).toBe(JSON.stringify([]));
   });
 
@@ -101,6 +101,6 @@ describe("ItemStore", () => {
 
     store.setItems([]);
 
-    expect(mocksLocalStorage.length).toBe(0);
+    expect(mockLocalStorage.length).toBe(0);
   });
 });

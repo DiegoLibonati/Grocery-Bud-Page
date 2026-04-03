@@ -8,7 +8,7 @@ import Item from "@/components/Item/Item";
 
 import { itemStore } from "@/stores/itemStore";
 
-import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 import { mockItems } from "@tests/__mocks__/items.mock";
 
 const renderComponent = (props: ItemProps): ItemComponent => {
@@ -19,13 +19,13 @@ const renderComponent = (props: ItemProps): ItemComponent => {
 
 describe("Item Component", () => {
   beforeEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     itemStore.setItems([]);
   });
 
   afterEach(() => {
     document.body.innerHTML = "";
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     itemStore.setItems([]);
   });
 

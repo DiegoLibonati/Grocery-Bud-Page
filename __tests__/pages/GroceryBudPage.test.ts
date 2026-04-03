@@ -7,7 +7,7 @@ import GroceryBudPage from "@/pages/GroceryBudPage/GroceryBudPage";
 
 import { itemStore } from "@/stores/itemStore";
 
-import { mocksLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
 
 const renderPage = (): Page => {
   const container = GroceryBudPage();
@@ -17,13 +17,13 @@ const renderPage = (): Page => {
 
 describe("GroceryBudPage", () => {
   beforeEach(() => {
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     itemStore.setItems([]);
   });
 
   afterEach(() => {
     document.body.innerHTML = "";
-    mocksLocalStorage.clear();
+    mockLocalStorage.clear();
     itemStore.setItems([]);
   });
 
