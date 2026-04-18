@@ -42,7 +42,7 @@ const handleClearAllItems = (): void => {
   itemStore.setItems([]);
 };
 
-const GroceryBudPage = (): Page => {
+const FreshlistPage = (): Page => {
   const main = document.createElement("main") as Page;
   main.className = `flex items-center justify-center w-full h-screen bg-primary main-wrapper`;
 
@@ -152,4 +152,4 @@ const GroceryBudPage = (): Page => {
   return main;
 };
 
-export default GroceryBudPage;
+export default FreshlistPage;

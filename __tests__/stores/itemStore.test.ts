@@ -1,106 +1,155 @@
 import type { Item } from "@/types/app";
 
-import { ItemStore } from "@/stores/itemStore";
+import { itemStore } from "@/stores/itemStore";
 
-import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
+import { mockItems } from "@tests/__mocks__/items.mock";
 
-describe("ItemStore", () => {
-  let store: ItemStore;
-
+describe("itemStore", () => {
   beforeEach(() => {
-    mockLocalStorage.clear();
-    store = new ItemStore({
-      items: [],
-      idItemEdit: "",
+    localStorage.clear();
+    itemStore.setState({ items: [], idItemEdit: "" });
+    jest.clearAllMocks();
+  });
+
+  describe("initial state", () => {
+    it("should have empty items and empty idItemEdit", () => {
+      expect(itemStore.getState()).toEqual({ items: [], idItemEdit: "" });
     });
   });
 
-  afterEach(() => {
-    mockLocalStorage.clear();
+  describe("getItemById", () => {
+    it("should return the item with the given id", () => {
+      itemStore.setState({ items: mockItems });
+      const result = itemStore.getItemById("1");
+      expect(result).toEqual(mockItems[0]);
+    });
+
+    it("should return undefined when item does not exist", () => {
+      const result = itemStore.getItemById("nonexistent");
+      expect(result).toBeUndefined();
+    });
   });
 
-  it("should initialize with empty items", () => {
-    const state = store.getState();
+  describe("setItems", () => {
+    it("should update items in state", () => {
+      itemStore.setItems(mockItems);
+      expect(itemStore.get("items")).toEqual(mockItems);
+    });
 
-    expect(state.items).toEqual([]);
-    expect(state.idItemEdit).toBe("");
+    it("should call localStorage.clear when items array is empty", () => {
+      itemStore.setItems([]);
+      expect(localStorage.clear).toHaveBeenCalled();
+    });
+
+    it("should not call localStorage.clear when items array is not empty", () => {
+      itemStore.setItems(mockItems);
+      expect(localStorage.clear).not.toHaveBeenCalled();
+    });
   });
 
-  it("should add item to store", () => {
-    const newItem: Item = { id: "1", text: "Buy milk" };
+  describe("addItem", () => {
+    it("should append the item to the items array", () => {
+      const newItem: Item = { id: "2", text: "Buy bread" };
+      itemStore.addItem(newItem);
+      expect(itemStore.get("items")).toContainEqual(newItem);
+    });
 
-    store.addItem(newItem);
+    it("should preserve existing items when adding", () => {
+      itemStore.setState({ items: mockItems });
+      const newItem: Item = { id: "2", text: "Buy bread" };
+      itemStore.addItem(newItem);
+      expect(itemStore.get("items")).toEqual([...mockItems, newItem]);
+    });
 
-    expect(store.get("items")).toContainEqual(newItem);
+    it("should persist items to localStorage", () => {
+      const newItem: Item = { id: "2", text: "Buy bread" };
+      itemStore.addItem(newItem);
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "items",
+        JSON.stringify([newItem])
+      );
+    });
   });
 
-  it("should save item to localStorage when added", () => {
-    const newItem: Item = { id: "1", text: "Buy milk" };
+  describe("deleteItemById", () => {
+    it("should remove the item with the given id", () => {
+      itemStore.setState({ items: mockItems });
+      itemStore.deleteItemById("1");
+      expect(itemStore.get("items")).toEqual([]);
+    });
 
-    store.addItem(newItem);
+    it("should keep remaining items when deleting one", () => {
+      const items: Item[] = [
+        { id: "1", text: "Buy milk" },
+        { id: "2", text: "Buy bread" },
+      ];
+      itemStore.setState({ items });
+      itemStore.deleteItemById("1");
+      expect(itemStore.get("items")).toEqual([{ id: "2", text: "Buy bread" }]);
+    });
 
-    const stored = mockLocalStorage.getItem("items");
-    expect(stored).toBe(JSON.stringify([newItem]));
+    it("should persist updated items to localStorage", () => {
+      itemStore.setState({ items: mockItems });
+      itemStore.deleteItemById("1");
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "items",
+        JSON.stringify([])
+      );
+    });
   });
 
-  it("should get item by id", () => {
-    const item: Item = { id: "1", text: "Buy milk" };
-    store.addItem(item);
+  describe("setEditingItem", () => {
+    it("should set idItemEdit to the given id", () => {
+      itemStore.setEditingItem("1");
+      expect(itemStore.get("idItemEdit")).toBe("1");
+    });
 
-    const result = store.getItemById("1");
-
-    expect(result).toEqual(item);
+    it("should update idItemEdit when called again", () => {
+      itemStore.setEditingItem("1");
+      itemStore.setEditingItem("2");
+      expect(itemStore.get("idItemEdit")).toBe("2");
+    });
   });
 
-  it("should return undefined for non-existent item id", () => {
-    const result = store.getItemById("non-existent");
+  describe("setEditItem", () => {
+    it("should update the text of the item being edited", () => {
+      itemStore.setState({ items: mockItems, idItemEdit: "1" });
+      itemStore.setEditItem("Buy eggs");
+      expect(itemStore.get("items")[0]!.text).toBe("Buy eggs");
+    });
 
-    expect(result).toBeUndefined();
-  });
+    it("should not change the id of the edited item", () => {
+      itemStore.setState({ items: mockItems, idItemEdit: "1" });
+      itemStore.setEditItem("Buy eggs");
+      expect(itemStore.get("items")[0]!.id).toBe("1");
+    });
 
-  it("should delete item by id", () => {
-    const item: Item = { id: "1", text: "Buy milk" };
-    store.addItem(item);
+    it("should reset idItemEdit to empty string after editing", () => {
+      itemStore.setState({ items: mockItems, idItemEdit: "1" });
+      itemStore.setEditItem("Buy eggs");
+      expect(itemStore.get("idItemEdit")).toBe("");
+    });
 
-    store.deleteItemById("1");
+    it("should persist updated items to localStorage", () => {
+      itemStore.setState({ items: mockItems, idItemEdit: "1" });
+      itemStore.setEditItem("Buy eggs");
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "items",
+        JSON.stringify([{ id: "1", text: "Buy eggs" }])
+      );
+    });
 
-    expect(store.get("items")).toEqual([]);
-  });
-
-  it("should update localStorage when item is deleted", () => {
-    const item: Item = { id: "1", text: "Buy milk" };
-    store.addItem(item);
-
-    store.deleteItemById("1");
-
-    const stored = mockLocalStorage.getItem("items");
-    expect(stored).toBe(JSON.stringify([]));
-  });
-
-  it("should set editing item id", () => {
-    store.setEditingItem("1");
-
-    expect(store.get("idItemEdit")).toBe("1");
-  });
-
-  it("should edit item text", () => {
-    const item: Item = { id: "1", text: "Buy milk" };
-    store.addItem(item);
-    store.setEditingItem("1");
-
-    store.setEditItem("Buy bread");
-
-    const updatedItem = store.getItemById("1");
-    expect(updatedItem?.text).toBe("Buy bread");
-    expect(store.get("idItemEdit")).toBe("");
-  });
-
-  it("should clear localStorage when setting empty items", () => {
-    const item: Item = { id: "1", text: "Buy milk" };
-    store.addItem(item);
-
-    store.setItems([]);
-
-    expect(mockLocalStorage.length).toBe(0);
+    it("should only modify the item matching idItemEdit", () => {
+      const items: Item[] = [
+        { id: "1", text: "Buy milk" },
+        { id: "2", text: "Buy bread" },
+      ];
+      itemStore.setState({ items, idItemEdit: "1" });
+      itemStore.setEditItem("Buy oat milk");
+      expect(itemStore.get("items")).toEqual([
+        { id: "1", text: "Buy oat milk" },
+        { id: "2", text: "Buy bread" },
+      ]);
+    });
   });
 });

@@ -1,4 +1,4 @@
-# Grocery Bud Page
+# Freshlist
 
 ## Educational Purpose
 
@@ -17,7 +17,13 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-I made a web page that allows you to add items to a list. These items can be edited and deleted. There is also a button to delete all items in the list. It is important to note that every item that is added, is saved in the LocalStorage. This allows to keep the items in each update of the page.
+**Freshlist** is a lightweight grocery list manager that runs entirely in the browser — no accounts, no server, no friction. You open it, you manage your list, and your data stays on your device.
+
+The core workflow is straightforward: type the name of an item into the input field and hit the add button to append it to your list. Every item on the list comes with two action buttons — one to edit its text and one to delete it entirely. When you click edit, the item's current text is loaded back into the input field so you can modify it in place; confirming the change updates the item without creating a duplicate. If you want to wipe the entire list at once, a single "Clear All Items" button removes everything in one click.
+
+Persistence is handled automatically through the browser's localStorage API. Every time you add, edit, or delete an item, the updated list is serialized and saved to localStorage — so if you refresh the page, close the tab, or come back later, your list is exactly where you left it. Clearing all items also clears the stored data.
+
+The application is built as a vanilla TypeScript SPA using Vite and styled with Tailwind CSS. State is managed through a custom observer-based store that re-renders only the parts of the DOM that actually changed, keeping the UI in sync with the underlying data without relying on any framework.
 
 ## Technologies used
 
@@ -64,11 +70,7 @@ I made a web page that allows you to add items to a list. These items can be edi
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/Grocery-Bud-Page`](https://www.diegolibonati.com.ar/#/project/Grocery-Bud-Page)
-
-## Video
-
-https://github.com/DiegoLibonati/Grocery-Page/assets/99032604/68a321bf-fbae-4f67-b74a-99ae0e42e297
+[`https://www.diegolibonati.com.ar/#/project/freshlist`](https://www.diegolibonati.com.ar/#/project/freshlist)
 
 ## Testing
 

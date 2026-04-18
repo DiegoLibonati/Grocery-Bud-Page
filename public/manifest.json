@@ -1,7 +1,7 @@
 {
-  "name": "Grocery Bud",
-  "short_name": "Grocery Bud",
-  "description": "I made a web page that allows you to add items to a list. These items can be edited and deleted. There is also a button to delete all items in the list. It is important to note that every item that is added, is saved in the LocalStorage. This allows to keep the items in each update of the page.",
+  "name": "Freshlist",
+  "short_name": "Freshlist",
+  "description": "Freshlist is a lightweight grocery list manager that runs entirely in the browser — no accounts, no server, no friction. You open it, you manage your list, and your data stays on your device.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

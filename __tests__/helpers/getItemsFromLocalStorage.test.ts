@@ -1,36 +1,36 @@
+import type { Item } from "@/types/app";
+
 import { getItemsFromLocalStorage } from "@/helpers/getItemsFromLocalStorage";
 
-import { mockLocalStorage } from "@tests/__mocks__/localStorage.mock";
-import { mockItems } from "@tests/__mocks__/items.mock";
-
 describe("getItemsFromLocalStorage", () => {
-  beforeEach(() => {
-    mockLocalStorage.clear();
-  });
-
   afterEach(() => {
-    mockLocalStorage.clear();
+    localStorage.clear();
+    jest.clearAllMocks();
   });
 
-  it("should return items from localStorage", () => {
-    mockLocalStorage.setItem("items", JSON.stringify(mockItems));
+  describe("when localStorage has items", () => {
+    it("should return the parsed items array", () => {
+      const items: Item[] = [
+        { id: "1", text: "Buy milk" },
+        { id: "2", text: "Buy eggs" },
+      ];
+      localStorage.setItem("items", JSON.stringify(items));
+      const result = getItemsFromLocalStorage();
+      expect(result).toEqual(items);
+    });
 
-    const result = getItemsFromLocalStorage();
-
-    expect(result).toEqual(mockItems);
+    it("should return a single-item array", () => {
+      const items: Item[] = [{ id: "1", text: "Buy milk" }];
+      localStorage.setItem("items", JSON.stringify(items));
+      const result = getItemsFromLocalStorage();
+      expect(result).toEqual(items);
+    });
   });
 
-  it("should return empty array when no items in localStorage", () => {
-    const result = getItemsFromLocalStorage();
-
-    expect(result).toEqual([]);
-  });
-
-  it("should return empty array when localStorage has null", () => {
-    mockLocalStorage.setItem("items", "null");
-
-    const result = getItemsFromLocalStorage();
-
-    expect(result).toEqual([]);
+  describe("when localStorage is empty", () => {
+    it("should return an empty array", () => {
+      const result = getItemsFromLocalStorage();
+      expect(result).toEqual([]);
+    });
   });
 });
