@@ -37,13 +37,15 @@ describe("itemStore", () => {
     });
 
     it("should call localStorage.clear when items array is empty", () => {
+      localStorage.setItem("items", JSON.stringify(mockItems));
       itemStore.setItems([]);
-      expect(localStorage.clear).toHaveBeenCalled();
+      expect(localStorage.getItem("items")).toBeNull();
     });
 
     it("should not call localStorage.clear when items array is not empty", () => {
+      localStorage.setItem("items", JSON.stringify(mockItems));
       itemStore.setItems(mockItems);
-      expect(localStorage.clear).not.toHaveBeenCalled();
+      expect(localStorage.getItem("items")).toBe(JSON.stringify(mockItems));
     });
   });
 
@@ -64,10 +66,7 @@ describe("itemStore", () => {
     it("should persist items to localStorage", () => {
       const newItem: Item = { id: "2", text: "Buy bread" };
       itemStore.addItem(newItem);
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        "items",
-        JSON.stringify([newItem])
-      );
+      expect(localStorage.getItem("items")).toBe(JSON.stringify([newItem]));
     });
   });
 
@@ -91,10 +90,7 @@ describe("itemStore", () => {
     it("should persist updated items to localStorage", () => {
       itemStore.setState({ items: mockItems });
       itemStore.deleteItemById("1");
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        "items",
-        JSON.stringify([])
-      );
+      expect(localStorage.getItem("items")).toBe(JSON.stringify([]));
     });
   });
 
@@ -133,8 +129,7 @@ describe("itemStore", () => {
     it("should persist updated items to localStorage", () => {
       itemStore.setState({ items: mockItems, idItemEdit: "1" });
       itemStore.setEditItem("Buy eggs");
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        "items",
+      expect(localStorage.getItem("items")).toBe(
         JSON.stringify([{ id: "1", text: "Buy eggs" }])
       );
     });
