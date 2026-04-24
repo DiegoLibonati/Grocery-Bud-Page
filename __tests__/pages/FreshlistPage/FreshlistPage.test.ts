@@ -24,7 +24,7 @@ describe("FreshlistPage", () => {
   afterEach(() => {
     page.cleanup?.();
     document.body.innerHTML = "";
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe("rendering", () => {
