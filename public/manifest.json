@@ -1,7 +1,7 @@
 {
   "name": "Freshlist",
   "short_name": "Freshlist",
-  "description": "Freshlist is a lightweight grocery list manager that runs entirely in the browser — no accounts, no server, no friction. You open it, you manage your list, and your data stays on your device.",
+  "description": "Freshlist is a lightweight grocery list manager that runs entirely in the browser — no accounts, no server, no friction.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
