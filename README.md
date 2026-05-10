@@ -6,15 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
-
-The application will open automatically at `http://localhost:3000`
-
 ## Description
 
 **Freshlist** is a lightweight grocery list manager that runs entirely in the browser — no accounts, no server, no friction. You open it, you manage your list, and your data stays on your device.
@@ -69,11 +60,20 @@ The application is built as a vanilla TypeScript SPA using Vite and styled with 
 "vite": "^7.1.5"
 ```
 
-## Portfolio Link
+## Getting Started
 
-[`https://www.diegolibonati.com.ar/#/project/freshlist`](https://www.diegolibonati.com.ar/#/project/freshlist)
+With the stack above in mind, follow these steps to run the app locally:
+
+1. Clone the repository
+2. Navigate to the project folder
+3. Execute: `npm install`
+4. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`.
 
 ## Testing
+
+Once the app is running, you can verify the behavior described above with the test suite:
 
 1. Navigate to the project folder
 2. Execute: `npm test`
@@ -84,11 +84,9 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security
+## Security Audit
 
-### npm audit
-
-Check for vulnerabilities in dependencies:
+Beyond functional tests, you can also audit the dependency tree for known vulnerabilities:
 
 ```bash
 npm audit
@@ -97,3 +95,7 @@ npm audit
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/freshlist`](https://www.diegolibonati.com.ar/#/project/freshlist)
