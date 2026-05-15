@@ -60,7 +60,17 @@ The application is built as a vanilla TypeScript SPA using Vite and styled with 
 "vite": "^7.1.5"
 ```
 
+## CI
+
+Every push and pull request to `main` runs a GitHub Actions pipeline that enforces:
+
+1. ESLint + TypeScript type-check
+2. Full test suite (`npm test`)
+3. Production build (`npm run build`)
+
 ## Getting Started
+
+**Requires Node 22** (see `.nvmrc`).
 
 With the stack above in mind, follow these steps to run the app locally:
 

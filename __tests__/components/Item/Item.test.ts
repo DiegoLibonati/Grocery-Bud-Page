@@ -141,6 +141,18 @@ describe("Item", () => {
     });
   });
 
+  describe("edit behavior without form elements", () => {
+    it("should not set editing state when no input or button exists in the page", async () => {
+      const user = userEvent.setup();
+      const mockSetEditingItem = jest.spyOn(itemStore, "setEditingItem");
+      renderComponent();
+      await user.click(
+        screen.getByRole("button", { name: `Edit grocery item "Buy milk"` })
+      );
+      expect(mockSetEditingItem).not.toHaveBeenCalled();
+    });
+  });
+
   describe("cleanup", () => {
     it("should define a cleanup method", () => {
       const element = renderComponent();

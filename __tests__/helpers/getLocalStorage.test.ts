@@ -33,4 +33,12 @@ describe("getLocalStorage", () => {
       expect(result).toBeNull();
     });
   });
+
+  describe("when stored value is invalid JSON", () => {
+    it("should return null", () => {
+      localStorage.setItem("bad-key", "not valid json {{{");
+      const result = getLocalStorage("bad-key");
+      expect(result).toBeNull();
+    });
+  });
 });
