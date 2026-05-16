@@ -60,14 +60,6 @@ The application is built as a vanilla TypeScript SPA using Vite and styled with 
 "vite": "^7.1.5"
 ```
 
-## CI
-
-Every push and pull request to `main` runs a GitHub Actions pipeline that enforces:
-
-1. ESLint + TypeScript type-check
-2. Full test suite (`npm test`)
-3. Production build (`npm run build`)
-
 ## Getting Started
 
 **Requires Node 22** (see `.nvmrc`).
@@ -92,6 +84,52 @@ For coverage report:
 
 ```bash
 npm run test:coverage
+```
+
+## Continuous Integration
+
+The repository ships with a **GitHub Actions** pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs automatically on every `push` and `pull_request` targeting the `main` branch.
+
+### Pipeline overview
+
+```
+                      ┌─── PR or push to main ───┐
+                      ▼                          ▼
+┌──────────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│   lint-and-audit     │─▶│     testing      │─▶│      build       │
+│ eslint · type-check  │  │  jest (jsdom)    │  │ vite production  │
+└──────────────────────┘  └──────────────────┘  └──────────────────┘
+```
+
+### Validation jobs (run on every PR and push)
+
+1. **`lint-and-audit`** — runs `npm run lint` (ESLint flat config) and `npm run type-check` (TypeScript `--noEmit`).
+2. **`testing`** — runs the full Jest suite (`npm run test`) in the `jsdom` environment. Depends on `lint-and-audit`.
+3. **`build`** — runs `npm run build`, which type-checks and produces the Vite production bundle in `dist/`. Depends on `testing`.
+
+All three jobs run on `ubuntu-latest`, install Node from `.nvmrc` (currently Node 22) via `actions/setup-node@v4`, reuse the npm cache, and install dependencies with `npm ci` for reproducible builds.
+
+### Where the build outputs live
+
+| Output                                    | Location                                     |
+| ----------------------------------------- | -------------------------------------------- |
+| Validation logs (lint, type-check, tests) | **Actions** tab on GitHub                    |
+| Production bundle (`dist/`)               | Ephemeral, inside the runner — not published |
+
+> **Note:** This pipeline only validates the codebase; it does not publish artifacts or create releases. The `dist/` folder produced by the `build` job is discarded once the runner shuts down.
+
+### Running the same checks locally
+
+```bash
+# lint-and-audit
+npm run lint
+npm run type-check
+
+# testing
+npm run test
+
+# build
+npm run build
 ```
 
 ## Security Audit
